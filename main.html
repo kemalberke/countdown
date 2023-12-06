@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Countdown Timer</title>
+  <style>
+      body {
+          background-color: #000;
+          color: #fff;
+          font-family: Arial, sans-serif;
+          text-align: center;
+          padding: 20px;
+      }
+
+      h1 {
+          font-size: 24px;
+          margin-bottom: 10px;
+      }
+
+      #timer {
+          font-size: 48px;
+          margin-bottom: 20px;
+      }
+
+      button {
+          background-color: #333;
+          color: #fff;
+          padding: 10px 20px;
+          border: none;
+          cursor: pointer;
+          font-size: 16px;
+      }
+  </style>
+</head>
+
+<body>
+<div>
+  <h1>Countdown Timer</h1>
+  <div id="timer">00:00</div>
+  <button id="startButton">Start</button>
+  <button id="restartButton" disabled>Restart</button>
+</div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const startButton = document.getElementById('startButton');
+    const restartButton = document.getElementById('restartButton');
+    const timerElement = document.getElementById('timer');
+    let countdownInterval;
+    let countdownTime = 900; // 15 minutes in seconds
+
+    function startCountdown() {
+      startButton.disabled = true;
+      restartButton.disabled = false;
+      countdownInterval = setInterval(updateCountdown, 1000);
+    }
+
+    function restartCountdown() {
+      countdownTime = 900;
+      updateCountdown();
+      restartButton.disabled = true;
+      startButton.disabled = false;
+      clearInterval(countdownInterval);
+    }
+
+    function updateCountdown() {
+      const minutes = Math.floor(countdownTime / 60);
+      const seconds = countdownTime % 60;
+      timerElement.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+      if (countdownTime === 0) {
+        clearInterval(countdownInterval);
+        alert('Countdown finished!');
+      } else {
+        countdownTime--;
+      }
+    }
+
+    startButton.addEventListener('click', startCountdown);
+    restartButton.addEventListener('click', restartCountdown);
+  });
+</script>
+</body>
+
+</html>
